@@ -1,0 +1,729 @@
+```html
+<!DOCTYPE html>
+<html lang="pt" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encomendas Rápidas - Loja & Catálogo Interativo</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased">
+
+    <!-- Top Banner -->
+    <div class="bg-gradient-to-r from-emerald-600 via-sky-600 to-indigo-800 text-white text-xs py-2 px-4 text-center font-medium shadow-md">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <span class="flex items-center gap-1.5 mx-auto sm:mx-0">
+                <i class="fa-solid fa-tag text-yellow-300"></i> <strong>DESCONTO ANTECIPADO:</strong> 10% em acessórios e itens até 20.000 MT | 5% em equipamentos e telemóveis de alto valor!
+            </span>
+            <span class="hidden md:flex items-center gap-4">
+                <span><i class="fa-solid fa-satellite-dish text-sky-300"></i> Starlink & Acessórios</span>
+                <span><i class="fa-solid fa-shield-halved text-emerald-300"></i> Garantia Assegurada</span>
+            </span>
+        </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <nav class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                
+                <!-- Brand Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-sky-500/30">
+                        <i class="fa-solid fa-box-open text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-black tracking-tight text-white flex items-center gap-1.5">
+                            ENCOMENDAS RÁPIDAS
+                        </h1>
+                        <p class="text-[10px] text-sky-400 font-semibold tracking-wider uppercase">Material Informático & Tecnologia</p>
+                    </div>
+                </div>
+
+                <!-- Right Action Buttons -->
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleCartModal()" class="relative bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 p-2.5 rounded-xl transition flex items-center gap-2">
+                        <i class="fa-solid fa-cart-shopping text-sky-400 text-lg"></i>
+                        <span class="hidden sm:inline text-xs font-semibold">Carrinho</span>
+                        <span id="cartBadge" class="absolute -top-1.5 -right-1.5 bg-sky-500 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-slate-900 shadow">0</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-b from-slate-900 to-slate-950 border-b border-slate-800/80 py-10 px-4">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+            <div>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-4">
+                    <i class="fa-solid fa-camera"></i> Catálogo com Imagens & Desconto por Categoria de Preço
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-black text-white leading-tight mb-4">
+                    Smartphones Samsung, Xiaomi, Starlink & Acessórios
+                </h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                    Consulte as fotos reais e escolha como pagar. <strong>Pagamento antecipado ganha desconto automático</strong> (10% em acessórios e até 20.000 MT, 5% em equipamentos de alto valor acima de 20.000 MT).
+                </p>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-center">
+                        <i class="fa-solid fa-truck-fast text-sky-400 text-lg mb-1"></i>
+                        <h3 class="text-xs font-bold text-white">Frete Grátis</h3>
+                        <p class="text-[10px] text-slate-400">Maputo & Matola</p>
+                    </div>
+                    <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-center">
+                        <i class="fa-solid fa-hand-holding-dollar text-emerald-400 text-lg mb-1"></i>
+                        <h3 class="text-xs font-bold text-white">Desconto Antecipado</h3>
+                        <p class="text-[10px] text-slate-400">5% a 10% por produto</p>
+                    </div>
+                    <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-center col-span-2 sm:col-span-1">
+                        <i class="fa-solid fa-shield-halved text-indigo-400 text-lg mb-1"></i>
+                        <h3 class="text-xs font-bold text-white">Garantia Total</h3>
+                        <p class="text-[10px] text-slate-400">Em Todos os Produtos</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Methods Highlight Card -->
+            <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 shadow-xl relative overflow-hidden">
+                <div class="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-wallet text-sky-400"></i> Métodos de Pagamento
+                    </h3>
+                    <span class="text-[10px] font-bold bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30">Desconto Inteligente</span>
+                </div>
+                <p class="text-xs text-slate-400 mb-4">Titular das Contas: <strong class="text-white">Santos Júnior</strong></p>
+                
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-slate-950 border border-slate-800">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-lg bg-red-600/20 text-red-400 flex items-center justify-center font-black text-xs">M</span>
+                            <div>
+                                <p class="text-xs font-bold text-white">M-Pesa</p>
+                                <p class="text-xs text-sky-400 font-mono">84 367 3072</p>
+                            </div>
+                        </div>
+                        <button onclick="copyToClipboard('843673072')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1.5 rounded-lg border border-slate-700 transition">Copiar</button>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-slate-950 border border-slate-800">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-lg bg-orange-600/20 text-orange-400 flex items-center justify-center font-black text-xs">e</span>
+                            <div>
+                                <p class="text-xs font-bold text-white">e-Mola</p>
+                                <p class="text-xs text-sky-400 font-mono">86 152 6690</p>
+                            </div>
+                        </div>
+                        <button onclick="copyToClipboard('861526690')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1.5 rounded-lg border border-slate-700 transition">Copiar</button>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-slate-950 border border-slate-800">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-lg bg-emerald-600/20 text-emerald-400 flex items-center justify-center text-xs"><i class="fa-solid fa-building-columns"></i></span>
+                            <div>
+                                <p class="text-xs font-bold text-white">NIB Bancário</p>
+                                <p class="text-[11px] text-sky-400 font-mono">000100000042267507657</p>
+                            </div>
+                        </div>
+                        <button onclick="copyToClipboard('000100000042267507657')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1.5 rounded-lg border border-slate-700 transition">Copiar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Catalog Controls / Filters -->
+    <section class="max-w-7xl mx-auto px-4 py-8 w-full">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+            <div>
+                <h3 class="text-xl font-bold text-white">Catálogo de Produtos</h3>
+                <p class="text-xs text-slate-400">Cada produto tem o seu desconto antecipado específico (5% para valor alto >20k MT, 10% para acessórios e valor normal)</p>
+            </div>
+
+            <!-- Search input -->
+            <div class="relative w-full md:w-72">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Buscar modelo, cabo ou produto..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition">
+            </div>
+        </div>
+
+        <!-- Filter Buttons (Categories & Brands) -->
+        <div class="flex flex-wrap gap-2 mb-8">
+            <button onclick="setFilter('all')" class="filter-btn active bg-sky-600 text-white text-xs px-3.5 py-2 rounded-xl font-medium transition shadow-sm">Todos</button>
+            <button onclick="setFilter('starlink')" class="filter-btn bg-slate-900 text-slate-400 hover:text-white border border-slate-800 text-xs px-3.5 py-2 rounded-xl font-medium transition"><i class="fa-solid fa-satellite-dish text-sky-400 mr-1"></i> Starlink & Acessórios</button>
+            <button onclick="setFilter('samsung')" class="filter-btn bg-slate-900 text-slate-400 hover:text-white border border-slate-800 text-xs px-3.5 py-2 rounded-xl font-medium transition"><i class="fa-solid fa-mobile-screen text-sky-400 mr-1"></i> Samsung Galaxy</button>
+            <button onclick="setFilter('redmi')" class="filter-btn bg-slate-900 text-slate-400 hover:text-white border border-slate-800 text-xs px-3.5 py-2 rounded-xl font-medium transition"><i class="fa-solid fa-mobile-screen text-orange-400 mr-1"></i> Xiaomi / Redmi</button>
+            <button onclick="setFilter('celulares')" class="filter-btn bg-slate-900 text-slate-400 hover:text-white border border-slate-800 text-xs px-3.5 py-2 rounded-xl font-medium transition">Todos Celulares</button>
+        </div>
+
+        <!-- Product Grid -->
+        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Products injected dynamically via JavaScript -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-auto bg-slate-900 border-t border-slate-800 py-8 px-4 text-xs text-slate-400">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div>
+                <p class="font-bold text-white text-sm">Encomendas Rápidas</p>
+                <p class="mt-1">Venda de Equipamentos Starlink, Material Informático, Telemóveis e Acessórios.</p>
+            </div>
+            <div class="text-slate-400">
+                <p><i class="fa-solid fa-phone text-sky-400 mr-1"></i> Contacto / WhatsApp: 84 367 3072</p>
+                <p class="mt-1"><i class="fa-solid fa-location-dot text-sky-400 mr-1"></i> Maputo e Matola (Entregas Domiciliares Gratuitas)</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CART MODAL DEDICATED WITH PAYMENT TYPE CHOICE & DISCOUNT -->
+    <div id="cartModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex justify-end hidden">
+        <div class="w-full max-w-md bg-slate-900 h-full shadow-2xl flex flex-col border-l border-slate-800">
+            
+            <!-- Modal Header -->
+            <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900">
+                <h3 class="font-bold text-white text-base flex items-center gap-2">
+                    <i class="fa-solid fa-cart-shopping text-sky-400"></i> Seu Carrinho
+                </h3>
+                <button onclick="toggleCartModal()" class="text-slate-400 hover:text-white p-2 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content (Items + Payment Choice + Location Details Form) -->
+            <div class="flex-1 overflow-y-auto p-4 space-y-5">
+                
+                <!-- Items list -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Produtos Selecionados</h4>
+                    <div id="cartItemsContainer" class="space-y-3">
+                        <!-- Dynamic Cart Items -->
+                    </div>
+                </div>
+
+                <!-- PAYMENT OPTION SELECTION (INCENTIVE FOR ADVANCE PAYMENT) -->
+                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3">
+                    <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-hand-holding-dollar text-sm"></i> Escolha a Forma de Pagamento
+                    </h4>
+                    
+                    <div class="grid grid-cols-1 gap-2.5">
+                        <!-- Option 1: Advance Payment (Smart Discount) -->
+                        <label onclick="selectPaymentOption('advance')" id="optionAdvanceLabel" class="relative flex items-center justify-between p-3 rounded-xl border-2 border-emerald-500/80 bg-emerald-950/20 cursor-pointer transition">
+                            <div class="flex items-center gap-2.5">
+                                <input type="radio" name="paymentOption" value="advance" id="payAdvance" checked class="accent-emerald-500">
+                                <div>
+                                    <p class="text-xs font-bold text-white flex items-center gap-1.5">
+                                        Pagamento Antecipado 
+                                        <span class="bg-emerald-500 text-slate-950 text-[9px] font-black px-1.5 py-0.5 rounded-full uppercase">Desconto Específico por Item</span>
+                                    </p>
+                                    <p class="text-[10px] text-emerald-400">10% em acessórios e até 20k MT | 5% em equipamentos acima de 20k MT</p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Option 2: Payment on Delivery (Normal Price) -->
+                        <label onclick="selectPaymentOption('delivery')" id="optionDeliveryLabel" class="relative flex items-center justify-between p-3 rounded-xl border border-slate-800 bg-slate-900 cursor-pointer transition">
+                            <div class="flex items-center gap-2.5">
+                                <input type="radio" name="paymentOption" value="delivery" id="payDelivery" class="accent-sky-500">
+                                <div>
+                                    <p class="text-xs font-bold text-slate-300">Pagamento no Ato da Entrega</p>
+                                    <p class="text-[10px] text-slate-400">Pague ao entregador quando receber o produto (Preço Normal)</p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- AVISO DE HORÁRIO DE ENTREGA -->
+                <div class="bg-sky-950/40 border border-sky-800/60 rounded-xl p-3 flex items-start gap-2.5 text-xs text-sky-200">
+                    <i class="fa-solid fa-clock text-sky-400 text-base flex-shrink-0 mt-0.5"></i>
+                    <div>
+                        <strong class="block font-bold text-white mb-0.5">Política de Entregas:</strong>
+                        <p class="text-[11px] leading-relaxed text-slate-300">
+                            Pedidos feitos <strong>antes das 17h</strong> são entregues no mesmo dia. Pedidos feitos <strong>após as 17h</strong> são entregues logo pela manhã do dia seguinte (de Segunda a Sábado).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- DETAILED DELIVERY LOCATION FORM -->
+                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3">
+                    <h4 class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-map-location-dot"></i> Dados de Entrega e Contacto
+                    </h4>
+                    <p class="text-[10px] text-slate-400">Forneça os seus dados para que o entregador entre em contacto direto.</p>
+
+                    <div class="space-y-2.5 pt-1">
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Seu Nome ou Alcunha *</label>
+                            <input type="text" id="clientName" placeholder="Ex: Mário / Nito" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Contacto Telefónico *</label>
+                            <input type="tel" id="clientPhone" placeholder="Ex: +258 84 000 0000" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cidade / Bairro *</label>
+                            <input type="text" id="clientCityNeighbourhood" placeholder="Ex: Maputo, Bairro Triunfo / Matola" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Rua / Av. e Número da Casa *</label>
+                            <input type="text" id="clientStreetHouse" placeholder="Ex: Av. Marginal, Rua 12, Casa nº 45" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Ponto de Referência Próximo *</label>
+                            <input type="text" id="clientLandmark" placeholder="Ex: Perto da paragem X, ao lado da Escola Y, portão verde" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal Footer (Totals & Checkout Button) -->
+            <div class="p-4 border-t border-slate-800 bg-slate-900 space-y-3">
+                <div class="space-y-1 text-xs">
+                    <div id="subtotalRow" class="flex justify-between text-slate-400 hidden">
+                        <span>Subtotal Normal:</span>
+                        <span id="cartSubtotal">0 MT</span>
+                    </div>
+                    <div id="discountRow" class="flex justify-between text-emerald-400 font-semibold hidden">
+                        <span>Desconto Antecipado:</span>
+                        <span id="cartDiscount">-0 MT</span>
+                    </div>
+                    <div class="flex justify-between text-white font-black text-sm pt-1 border-t border-slate-800">
+                        <span>Total a Pagar:</span>
+                        <span id="cartTotal" class="text-sky-400 text-base">0 MT</span>
+                    </div>
+                </div>
+
+                <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-xl transition text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20">
+                    <i class="fa-brands fa-whatsapp text-base"></i> Enviar Encomenda via WhatsApp
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Application JavaScript Logic -->
+    <script>
+        const defaultFallbackImage = "https://placehold.co/400x300/0f172a/38bdf8?text=Encomendas+Rapidas";
+
+        // COMPLETE PRODUCT CATALOG (Samsung, Xiaomi, Starlink, Laptops, Cabos)
+        const products = [
+            // --- STARLINK ---
+            { id: 101, name: "Starlink Mini", brand: "Starlink", category: "starlink", price: 16500, warranty: "Garantia oficial de fábrica de 1 ano", image: "https://placehold.co/400x300/1e293b/38bdf8?text=Starlink+Mini" },
+            { id: 102, name: "Starlink V4 (Kit Standard)", brand: "Starlink", category: "starlink", price: 26000, warranty: "Garantia oficial de fábrica de 1 ano", image: "https://placehold.co/400x300/1e293b/38bdf8?text=Starlink+V4+Standard" },
+            { id: 103, name: "Cabo Starlink 3ª Geração - 15M", brand: "Starlink", category: "starlink", price: 4000, warranty: "Garantia de substituição da loja", image: "https://placehold.co/400x300/1e293b/38bdf8?text=Cabo+Starlink+15M" },
+            { id: 104, name: "Cabo Starlink 3ª Geração - 23M", brand: "Starlink", category: "starlink", price: 5000, warranty: "Garantia de substituição da loja", image: "https://placehold.co/400x300/1e293b/38bdf8?text=Cabo+Starlink+23M" },
+            { id: 105, name: "Cabo Starlink 3ª Geração - 30M", brand: "Starlink", category: "starlink", price: 6000, warranty: "Garantia de substituição da loja", image: "https://placehold.co/400x300/1e293b/38bdf8?text=Cabo+Starlink+30M" },
+            { id: 106, name: "Cabo Starlink 3ª Geração - 46M", brand: "Starlink", category: "starlink", price: 7500, warranty: "Garantia de substituição da loja", image: "https://placehold.co/400x300/1e293b/38bdf8?text=Cabo+Starlink+46M" },
+            { id: 107, name: "Cabo Starlink 3ª Geração - 75M", brand: "Starlink", category: "starlink", price: 13000, warranty: "Garantia de substituição da loja", image: "https://placehold.co/400x300/1e293b/38bdf8?text=Cabo+Starlink+75M" },
+            { id: 108, name: "Suporte para Starlink (Curvo Parede / Reto Teto)", brand: "Starlink", category: "starlink", price: 4000, warranty: "Garantia estrutural da loja", image: "https://placehold.co/400x300/1e293b/38bdf8?text=Suporte+Starlink" },
+            { id: 109, name: "Tripé para Starlink Mini", brand: "Starlink", category: "starlink", price: 6000, warranty: "Garantia estrutural da loja", image: "https://placehold.co/400x300/1e293b/38bdf8?text=Tripes+Starlink+Mini" },
+
+            // --- SAMSUNG GALAXY ---
+            { id: 201, name: "Samsung Galaxy A06 4GB/64GB", brand: "Samsung", category: "samsung", price: 10000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+A06" },
+            { id: 202, name: "Samsung Galaxy A06 4GB/128GB", brand: "Samsung", category: "samsung", price: 12000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+A06+128GB" },
+            { id: 203, name: "Samsung Galaxy A07 4GB/64GB", brand: "Samsung", category: "samsung", price: 12000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+A07" },
+            { id: 204, name: "Samsung Galaxy A07 4GB/128GB", brand: "Samsung", category: "samsung", price: 13000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+A07+128GB" },
+            { id: 205, name: "Samsung Galaxy A16 4GB/128GB", brand: "Samsung", category: "samsung", price: 14000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+A16" },
+            { id: 206, name: "Samsung Galaxy A17 4GB/128GB", brand: "Samsung", category: "samsung", price: 15000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+A17" },
+            { id: 207, name: "Samsung Galaxy A17 8GB/256GB", brand: "Samsung", category: "samsung", price: 21000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+A17+256GB" },
+            { id: 208, name: "Samsung Galaxy A26 6GB/128GB", brand: "Samsung", category: "samsung", price: 20000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+A26" },
+            { id: 209, name: "Samsung Galaxy A26 8GB/256GB", brand: "Samsung", category: "samsung", price: 25000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+A26+256GB" },
+            { id: 210, name: "Samsung Galaxy A36 6GB/128GB", brand: "Samsung", category: "samsung", price: 24000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+A36" },
+            { id: 211, name: "Samsung Galaxy A37 8GB/128GB", brand: "Samsung", category: "samsung", price: 26000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+A37" },
+            { id: 212, name: "Samsung Galaxy A37 8GB/256GB", brand: "Samsung", category: "samsung", price: 30000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+A37+256GB" },
+            { id: 213, name: "Samsung Galaxy A56 8GB/128GB 5G", brand: "Samsung", category: "samsung", price: 29000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+A56+5G" },
+            { id: 214, name: "Samsung Galaxy A56 8GB/256GB", brand: "Samsung", category: "samsung", price: 30000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+A56+256GB" },
+            { id: 215, name: "Samsung Galaxy A57 8GB/128GB", brand: "Samsung", category: "samsung", price: 31000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+A57" },
+            { id: 216, name: "Samsung Galaxy A57 8GB/256GB", brand: "Samsung", category: "samsung", price: 35000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+A57+256GB" },
+            { id: 217, name: "Samsung Galaxy M36 6GB/128GB", brand: "Samsung", category: "samsung", price: 18500, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+M36" },
+            { id: 218, name: "Samsung Galaxy S25 FE 8GB/256GB", brand: "Samsung", category: "samsung", price: 48000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+S25+FE" },
+            { id: 219, name: "Samsung Galaxy S25 Ultra 256GB/12GB", brand: "Samsung", category: "samsung", price: 67000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=S25+Ultra" },
+            { id: 220, name: "Samsung Galaxy S25 Ultra 512GB/12GB", brand: "Samsung", category: "samsung", price: 80000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=S25+Ultra+512GB" },
+            { id: 221, name: "Samsung Galaxy S26 256GB", brand: "Samsung", category: "samsung", price: 68000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+S26" },
+            { id: 222, name: "Samsung Galaxy S26 Plus 256GB", brand: "Samsung", category: "samsung", price: 75000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=S26+Plus" },
+            { id: 223, name: "Samsung Galaxy S26 Ultra 256GB/12GB", brand: "Samsung", category: "samsung", price: 78000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=S26+Ultra" },
+            { id: 224, name: "Samsung Galaxy S26 Ultra 512GB/12GB", brand: "Samsung", category: "samsung", price: 90000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=S26+Ultra+512GB" },
+            { id: 225, name: "Samsung Galaxy S26 Ultra 1TB/12GB", brand: "Samsung", category: "samsung", price: 120000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=S26+Ultra+1TB" },
+            { id: 226, name: "Samsung Galaxy Z Fold7", brand: "Samsung", category: "samsung", price: 105000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+Z+Fold7" },
+            { id: 227, name: "Samsung Galaxy S21 256GB", brand: "Samsung", category: "samsung", price: 22000, warranty: "Garantia de 6 meses da loja", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+S21" },
+            { id: 228, name: "Samsung Galaxy S21 Plus 128GB", brand: "Samsung", category: "samsung", price: 22000, warranty: "Garantia de 6 meses da loja", image: "https://placehold.co/400x300/0f172a/60a5fa?text=S21+Plus" },
+            { id: 229, name: "Samsung Galaxy S21 Plus 256GB", brand: "Samsung", category: "samsung", price: 24000, warranty: "Garantia de 6 meses da loja", image: "https://placehold.co/400x300/0f172a/60a5fa?text=S21+Plus+256GB" },
+            { id: 230, name: "Samsung Galaxy S21 Ultra 128GB", brand: "Samsung", category: "samsung", price: 25000, warranty: "Garantia de 6 meses da loja", image: "https://placehold.co/400x300/0f172a/60a5fa?text=S21+Ultra" },
+            { id: 231, name: "Samsung Galaxy S21 Ultra 256GB", brand: "Samsung", category: "samsung", price: 30000, warranty: "Garantia de 6 meses da loja", image: "https://placehold.co/400x300/0f172a/60a5fa?text=S21+Ultra+256GB" },
+            { id: 232, name: "Samsung Galaxy S22 Ultra 256GB", brand: "Samsung", category: "samsung", price: 35000, warranty: "Garantia de 6 meses da loja", image: "https://placehold.co/400x300/0f172a/60a5fa?text=S22+Ultra" },
+            { id: 233, name: "Samsung Galaxy S23 128GB", brand: "Samsung", category: "samsung", price: 27000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=Galaxy+S23" },
+            { id: 234, name: "Samsung Galaxy S23 Plus 256GB", brand: "Samsung", category: "samsung", price: 32000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=S23+Plus" },
+            { id: 235, name: "Samsung Galaxy S23 Ultra 256GB", brand: "Samsung", category: "samsung", price: 43000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=S23+Ultra" },
+            { id: 236, name: "Samsung Galaxy S24 Ultra 256GB", brand: "Samsung", category: "samsung", price: 55000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/0f172a/60a5fa?text=S24+Ultra" },
+
+            // --- XIAOMI REDMI ---
+            { id: 301, name: "Xiaomi Redmi A5 3GB/64GB", brand: "Xiaomi", category: "redmi", price: 9000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/451a03/fb923c?text=Redmi+A5" },
+            { id: 302, name: "Xiaomi Redmi A5 4GB/128GB", brand: "Xiaomi", category: "redmi", price: 10000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/451a03/fb923c?text=Redmi+A5+128GB" },
+            { id: 303, name: "Xiaomi Redmi A7 3GB/64GB", brand: "Xiaomi", category: "redmi", price: 11000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/451a03/fb923c?text=Redmi+A7" },
+            { id: 304, name: "Xiaomi Redmi A7 Pro 4GB/64GB", brand: "Xiaomi", category: "redmi", price: 12000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/451a03/fb923c?text=Redmi+A7+Pro" },
+            { id: 305, name: "Xiaomi Redmi 15C 4GB/128GB", brand: "Xiaomi", category: "redmi", price: 12000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/451a03/fb923c?text=Redmi+15C" },
+            { id: 306, name: "Xiaomi Redmi 15C 8GB/256GB", brand: "Xiaomi", category: "redmi", price: 15000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/451a03/fb923c?text=Redmi+15C+256GB" },
+            { id: 307, name: "Xiaomi Redmi 15 6GB/128GB", brand: "Xiaomi", category: "redmi", price: 17000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/451a03/fb923c?text=Redmi+15" },
+            { id: 308, name: "Xiaomi Redmi 15 8GB/256GB", brand: "Xiaomi", category: "redmi", price: 18500, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/451a03/fb923c?text=Redmi+15+256GB" },
+            { id: 309, name: "Xiaomi Redmi Note 13 6GB/128GB", brand: "Xiaomi", category: "redmi", price: 15000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/451a03/fb923c?text=Note+13" },
+            { id: 310, name: "Xiaomi Redmi Note 14 8GB/256GB", brand: "Xiaomi", category: "redmi", price: 20000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/451a03/fb923c?text=Note+14" },
+            { id: 311, name: "Xiaomi Redmi Note 14s 8GB/256GB", brand: "Xiaomi", category: "redmi", price: 19000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/451a03/fb923c?text=Note+14s" },
+            { id: 312, name: "Xiaomi Redmi Note 14 Pro Plus 8GB/256GB", brand: "Xiaomi", category: "redmi", price: 30000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/451a03/fb923c?text=Note+14+Pro+" },
+            { id: 313, name: "Xiaomi Redmi Note 14 Pro Plus 12GB/512GB", brand: "Xiaomi", category: "redmi", price: 35000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/451a03/fb923c?text=Note+14+Pro+512GB" },
+            { id: 314, name: "Xiaomi Redmi Note 15 8GB/256GB", brand: "Xiaomi", category: "redmi", price: 22000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/451a03/fb923c?text=Note+15" },
+            { id: 315, name: "Xiaomi Redmi Note 15 Pro Plus 8GB/256GB", brand: "Xiaomi", category: "redmi", price: 35000, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/451a03/fb923c?text=Note+15+Pro+" },
+            { id: 316, name: "Xiaomi Redmi Note 15 Pro Plus 12GB/512GB", brand: "Xiaomi", category: "redmi", price: 37500, warranty: "Garantia de 1 ano contra defeitos de fábrica", image: "https://placehold.co/400x300/451a03/fb923c?text=Note+15+Pro+512GB" }
+        ];
+
+        let cart = [];
+        let paymentMode = 'advance'; // 'advance' or 'delivery'
+        let currentFilter = 'all';
+
+        // Helper function to calculate advance price based on product value (>20k MT = 5% off, <=20k MT = 10% off)
+        function getAdvancePrice(price) {
+            const discountRate = price > 20000 ? 0.05 : 0.10;
+            return Math.round(price * (1 - discountRate));
+        }
+
+        function getDiscountPercentLabel(price) {
+            return price > 20000 ? "5%" : "10%";
+        }
+
+        window.onload = function() {
+            renderProducts(products);
+            updateCartUI();
+        };
+
+        function renderProducts(items) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+
+            if (items.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500 text-xs">Nenhum produto encontrado com estes critérios.</div>`;
+                return;
+            }
+
+            items.forEach(product => {
+                const advancePrice = getAdvancePrice(product.price);
+                const discountPct = getDiscountPercentLabel(product.price);
+                const productImage = product.image && product.image.trim() !== "" ? product.image : defaultFallbackImage;
+
+                grid.innerHTML += `
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition duration-300 flex flex-col justify-between group relative">
+                        <div>
+                            <div class="relative h-52 overflow-hidden bg-slate-950 flex items-center justify-center">
+                                <img src="${productImage}" onerror="this.onerror=null;this.src='${defaultFallbackImage}';" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <span class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md text-sky-400 text-[10px] font-bold px-2.5 py-1 rounded-lg border border-slate-800">
+                                    ${product.brand}
+                                </span>
+                                <span class="absolute top-3 right-3 bg-emerald-500 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-md shadow">
+                                    -${discountPct} ANTECIPADO
+                                </span>
+                            </div>
+                            <div class="p-4">
+                                <h4 class="font-bold text-white text-sm line-clamp-1">${product.name}</h4>
+                                <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">${product.description || 'Produto de alta qualidade com garantia assegurada pela loja.'}</p>
+                                <p class="text-[10px] text-emerald-400 mt-2 font-medium"><i class="fa-solid fa-shield-check mr-1"></i> ${product.warranty}</p>
+                            </div>
+                        </div>
+
+                        <div class="p-4 pt-0">
+                            <!-- Prices Display -->
+                            <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800/80 mb-3 flex items-center justify-between">
+                                <div>
+                                    <span class="text-[9px] font-bold text-emerald-400 uppercase block">Antecipado (${discountPct} off)</span>
+                                    <span class="text-sm font-black text-emerald-400">${advancePrice.toLocaleString('pt-MZ')} MT</span>
+                                </div>
+                                <div class="text-right border-l border-slate-800 pl-3">
+                                    <span class="text-[9px] text-slate-400 uppercase block">Na Entrega</span>
+                                    <span class="text-xs font-bold text-slate-300">${product.price.toLocaleString('pt-MZ')} MT</span>
+                                </div>
+                            </div>
+
+                            <button onclick="addToCart(${product.id})" class="w-full bg-sky-600 hover:bg-sky-500 text-white py-2.5 px-3 rounded-xl transition text-xs flex items-center justify-center gap-1.5 font-bold shadow-md">
+                                <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Filter Logic
+        function setFilter(category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-sky-600', 'text-white');
+                btn.classList.add('bg-slate-900', 'text-slate-400');
+            });
+            if(event && event.target) {
+                event.target.classList.add('bg-sky-600', 'text-white');
+                event.target.classList.remove('bg-slate-900', 'text-slate-400');
+            }
+
+            filterProducts();
+        }
+
+        function filterProducts() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = products.filter(p => {
+                const matchesCategory = currentFilter === 'all' || p.category === currentFilter || (currentFilter === 'celulares' && (p.category === 'samsung' || p.category === 'redmi'));
+                const matchesSearch = p.name.toLowerCase().includes(search) || p.brand.toLowerCase().includes(search) || p.category.toLowerCase().includes(search);
+                return matchesCategory && matchesSearch;
+            });
+            renderProducts(filtered);
+        }
+
+        // Cart Actions
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existing = cart.find(item => item.id === productId);
+
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+
+            updateCartUI();
+            toggleCartModal(true);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        function changeQty(productId, delta) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        function selectPaymentOption(mode) {
+            paymentMode = mode;
+            const advLabel = document.getElementById('optionAdvanceLabel');
+            const delLabel = document.getElementById('optionDeliveryLabel');
+            const radioAdv = document.getElementById('payAdvance');
+            const radioDel = document.getElementById('payDelivery');
+
+            if (mode === 'advance') {
+                radioAdv.checked = true;
+                advLabel.className = "relative flex items-center justify-between p-3 rounded-xl border-2 border-emerald-500/80 bg-emerald-950/20 cursor-pointer transition";
+                delLabel.className = "relative flex items-center justify-between p-3 rounded-xl border border-slate-800 bg-slate-900 cursor-pointer transition";
+            } else {
+                radioDel.checked = true;
+                delLabel.className = "relative flex items-center justify-between p-3 rounded-xl border-2 border-sky-500/80 bg-sky-950/20 cursor-pointer transition";
+                advLabel.className = "relative flex items-center justify-between p-3 rounded-xl border border-slate-800 bg-slate-900 cursor-pointer transition";
+            }
+
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const count = cart.reduce((acc, i) => acc + i.qty, 0);
+            const rawTotal = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+            
+            let finalTotal = 0;
+            let discountAmount = 0;
+
+            cart.forEach(item => {
+                const itemAdvPrice = getAdvancePrice(item.price);
+                const itemNormalPrice = item.price;
+                
+                if (paymentMode === 'advance') {
+                    finalTotal += itemAdvPrice * item.qty;
+                    discountAmount += (itemNormalPrice - itemAdvPrice) * item.qty;
+                } else {
+                    finalTotal += itemNormalPrice * item.qty;
+                }
+            });
+
+            document.getElementById('cartBadge').innerText = count;
+            document.getElementById('cartSubtotal').innerText = `${rawTotal.toLocaleString('pt-MZ')} MT`;
+            document.getElementById('cartDiscount').innerText = `-${discountAmount.toLocaleString('pt-MZ')} MT`;
+            document.getElementById('cartTotal').innerText = `${finalTotal.toLocaleString('pt-MZ')} MT`;
+
+            const subtotalRow = document.getElementById('subtotalRow');
+            const discountRow = document.getElementById('discountRow');
+
+            if (paymentMode === 'advance') {
+                subtotalRow.classList.remove('hidden');
+                discountRow.classList.remove('hidden');
+            } else {
+                subtotalRow.classList.add('hidden');
+                discountRow.classList.add('hidden');
+            }
+
+            const container = document.getElementById('cartItemsContainer');
+            if (cart.length === 0) {
+                container.innerHTML = `<p class="text-slate-500 text-xs text-center py-6">O seu carrinho está vazio.</p>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            cart.forEach(item => {
+                const itemPrice = paymentMode === 'advance' ? getAdvancePrice(item.price) : item.price;
+                const discountPct = getDiscountPercentLabel(item.price);
+                const itemImage = item.image && item.image.trim() !== "" ? item.image : defaultFallbackImage;
+
+                container.innerHTML += `
+                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 flex items-center justify-between gap-3">
+                        <img src="${itemImage}" onerror="this.onerror=null;this.src='${defaultFallbackImage}';" alt="${item.name}" class="w-10 h-10 object-cover rounded-lg bg-slate-900 border border-slate-800">
+                        <div class="flex-1">
+                            <h5 class="text-xs font-bold text-white line-clamp-1">${item.name}</h5>
+                            <p class="text-[10px] ${paymentMode === 'advance' ? 'text-emerald-400' : 'text-sky-400'} font-bold">
+                                ${(itemPrice * item.qty).toLocaleString('pt-MZ')} MT ${paymentMode === 'advance' ? `<span class="text-[8px] bg-emerald-500/20 px-1 py-0.2 rounded ml-1">-${discountPct}</span>` : ''}
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-lg p-1">
+                            <button onclick="changeQty(${item.id}, -1)" class="w-5 h-5 flex items-center justify-center text-slate-400 hover:text-white text-xs">-</button>
+                            <span class="text-xs font-bold text-white w-4 text-center">${item.qty}</span>
+                            <button onclick="changeQty(${item.id}, 1)" class="w-5 h-5 flex items-center justify-center text-slate-400 hover:text-white text-xs">+</button>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" class="text-red-400 hover:text-red-300 text-xs p-1">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleCartModal(forceOpen = false) {
+            const modal = document.getElementById('cartModal');
+            if (forceOpen) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.toggle('hidden');
+            }
+        }
+
+        // WhatsApp Checkout
+        function checkoutWhatsApp() {
+            if (cart.length === 0) {
+                alert("Adicione pelo menos um item ao carrinho!");
+                return;
+            }
+
+            const name = document.getElementById('clientName').value.trim();
+            const phone = document.getElementById('clientPhone').value.trim();
+            const cityNeighbourhood = document.getElementById('clientCityNeighbourhood').value.trim();
+            const streetHouse = document.getElementById('clientStreetHouse').value.trim();
+            const landmark = document.getElementById('clientLandmark').value.trim();
+
+            if (!name || !phone || !cityNeighbourhood || !streetHouse || !landmark) {
+                alert("Por favor, preencha todos os dados de entrega (Nome/Alcunha, Telefone, Bairro/Cidade, Rua/Nº da Casa e Pontos de Referência)!");
+                return;
+            }
+
+            let rawTotal = 0;
+            let finalTotal = 0;
+            let discount = 0;
+
+            cart.forEach(item => {
+                const adv = getAdvancePrice(item.price);
+                rawTotal += item.price * item.qty;
+                if (paymentMode === 'advance') {
+                    finalTotal += adv * item.qty;
+                    discount += (item.price - adv) * item.qty;
+                } else {
+                    finalTotal += item.price * item.qty;
+                }
+            });
+
+            let msg = `Olá, Encomendas Rápidas! Gostaria de confirmar uma nova encomenda:\n\n`;
+            msg += `👤 *DADOS DO CLIENTE:*\n`;
+            msg += `- *Nome / Alcunha:* ${name}\n`;
+            msg += `- *Contacto:* ${phone}\n\n`;
+
+            msg += `📍 *ENDEREÇO DE ENTREGA:*\n`;
+            msg += `- *Cidade/Bairro:* ${cityNeighbourhood}\n`;
+            msg += `- *Rua/Nº Casa:* ${streetHouse}\n`;
+            msg += `- *Pontos de Referência:* ${landmark}\n\n`;
+
+            msg += `💳 *OPÇÃO DE PAGAMENTO SELECIONADA:*\n`;
+            if (paymentMode === 'advance') {
+                msg += `👉 *PAGAMENTO ANTECIPADO (Desconto Específico Aplicado)*\n`;
+                msg += `_Solicito a confirmação do pagamento via M-Pesa, e-Mola ou NIB para dar início ao envio._\n\n`;
+            } else {
+                msg += `👉 *PAGAMENTO NO Ato da Entrega (PREÇO NORMAL)*\n\n`;
+            }
+
+            msg += `📦 *PRODUTOS ENCOMENDADOS:*\n`;
+            cart.forEach((item, index) => {
+                const itemPrice = paymentMode === 'advance' ? getAdvancePrice(item.price) : item.price;
+                const discPct = getDiscountPercentLabel(item.price);
+                msg += `${index + 1}. *${item.name}* (x${item.qty}) - ${(itemPrice * item.qty).toLocaleString('pt-MZ')} MT ${paymentMode === 'advance' ? `(-${discPct})` : ''}\n   _Garantia: ${item.warranty}_\n`;
+            });
+
+            if (paymentMode === 'advance') {
+                msg += `\n💰 *Subtotal Normal:* ${rawTotal.toLocaleString('pt-MZ')} MT\n`;
+                msg += `🎁 *Desconto Antecipado Total:* -${discount.toLocaleString('pt-MZ')} MT\n`;
+            }
+            msg += `💵 *VALOR TOTAL A PAGAR:* ${finalTotal.toLocaleString('pt-MZ')} MT\n\n`;
+
+            if (paymentMode === 'advance') {
+                msg += `🏦 *DADOS PARA EFETUAR O PAGAMENTO (Titular: Santos Júnior):*\n`;
+                msg += `- M-Pesa: 84 367 3072\n`;
+                msg += `- e-Mola: 86 152 6690\n`;
+                msg += `- NIB: 000100000042267507657\n\n`;
+            }
+
+            msg += `🚚 *INFORMAÇÃO DE ENTREGA:*\n`;
+            msg += `_Nota: Pedidos feitos antes das 17h são entregues no mesmo dia. Pedidos após as 17h são entregues logo na manhã seguinte (Segunda a Sábado). Um entregador entrará em contacto direto._\n\n`;
+            msg += `Aguardo a confirmação e o contacto do entregador no número fornecido.`;
+
+            const encoded = encodeURIComponent(msg);
+            window.open(`https://wa.me/258843673072?text=${encoded}`, '_blank');
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Copiado com sucesso: " + text);
+            }).catch(() => {
+                const input = document.createElement("input");
+                input.value = text;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand("copy");
+                document.body.removeChild(input);
+                alert("Copiado com sucesso: " + text);
+            });
+        }
+    </script>
+</body>
+</html>
+```
